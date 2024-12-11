@@ -17,6 +17,11 @@ const isTextGenerationSingleArray = (output: TextGenerationSingle[] | TextGenera
 const generator = await pipeline(
   "text-generation",
   "onnx-community/Llama-3.2-1B-Instruct",
+  {
+    progress_callback: ({ name, status, loaded, total, progress, file }) => {
+      console.log(`${name || ""}(${file || ""}):${status} ${loaded || 0}/${total || 0} ${progress || 0}% `);
+    }
+  }
 );
 
 // Define the list of messages
